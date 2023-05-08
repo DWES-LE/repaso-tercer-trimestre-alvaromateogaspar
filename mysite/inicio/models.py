@@ -4,7 +4,7 @@ from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel, InlinePanel
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.snippets.models import register_snippet
 
-class FutbolistasPage(Page):
+class StreamerPage(Page):
     full_name = models.CharField(max_length=255)
     date_of_birth = models.DateField()
     birth_city = models.CharField(max_length=255)

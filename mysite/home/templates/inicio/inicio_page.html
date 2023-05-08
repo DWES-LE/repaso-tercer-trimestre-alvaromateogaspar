@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block content %}
+  <div class="container">
+    <h1>{{ page.nombre_completo }}</h1>
+    <p>Fecha de nacimiento: {{ page.fecha_nacimiento }}</p>
+    <p>Lugar de nacimiento: {{ page.ciudad }}, {{ page.pais }} ({{ page.coordenadas }})</p>
+    <h2>Biografía</h2>
+    <p>{{ page.biografia }}</p>
+
+    <h2>Enlaces a redes sociales</h2>
+    <p>{{ page.social_links|urlize }}</p>
+  </div>
+{% endblock %}

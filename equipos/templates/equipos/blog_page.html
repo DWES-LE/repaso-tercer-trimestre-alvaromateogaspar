@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block body_class %}template-equipo{% endblock %}
+
+{% block content %}
+    <h1>{{ equipo.nombre }}</h1>
+    <p><strong>Fundación:</strong> {{ equipo.fundacion }}</p>
+    <p><strong>Ciudad:</strong> {{ equipo.ciudad }}</p>
+    <p><strong>Estadio:</strong> {{ equipo.estadio }}</p>
+
+    <h2>Jugadores</h2>
+    <ul>
+        {% for jugador in equipo.jugadores.all %}
+            <li>{{ jugador.nombre }} - {{ jugador.posicion }}</li>
+        {% empty %}
+            <li>No hay jugadores registrados</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

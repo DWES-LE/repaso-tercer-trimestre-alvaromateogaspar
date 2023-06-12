@@ -1,60 +1,38 @@
 from django.db import models
-
 from modelcluster.fields import ParentalKey
-
-from wagtail.models import Page, Orderable
-from wagtail.fields import RichTextField
-from wagtail.admin.panels import FieldPanel, InlinePanel
-from wagtail.search import index
-
-
+from wagtail.core.models import Page
+from wagtail.core.fields import RichTextField
+from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
+from wagtail.core import blocks
+from wagtail.core.fields import StreamField
 
 
-# Keep the definition of BlogIndexPage, and add:
+class VideoGamePage(Page):
+    description = RichTextField()
+    cover = models.ForeignKey(
+        'wagtailimages.Image', null=True, blank=True, on_delete=models.SET_NULL, related_name='+')
+    release_date = models.DateField()
+    platforms = StreamField([
+        ('platform', blocks.CharBlock(max_length=255)),
+    ])
+    genero = models.CharField(max_length=255, null=True, blank=True)
+    desarrollador = models.CharField(max_length=255, null=True, blank=True)
+    editor = models.CharField(max_length=255, null=True, blank=True)
+    jugadores = models.CharField(max_length=255, null=True, blank=True)
+    modosdejuego = models.CharField(max_length=255, null=True, blank=True)
+    requisitos = models.CharField(max_length=255, null=True, blank=True)
 
-
-class BlogPage(Page):
-    nombre = models.CharField(max_length=255)
-    date = models.DateField("Fecha de nacimiento")
-    lugar_de_nacimiento = models.CharField(max_length=1000)
-    body = models.CharField(max_length=1000)
-    enlace_redes_sociales = models.CharField(max_length=200)
-    otros_detalles = models.CharField(max_length=1000)
-
-    
-    def main_image(self):
-        gallery_item = self.gallery_images.first()
-        if gallery_item:
-            return gallery_item.image
-        else:
-            return None
-
-    search_fields = Page.search_fields + [
-        index.SearchField('nombre'),
-        index.SearchField('lugar_de_nacimiento'),
-        index.SearchField('body'),
-        index.SearchField('enlace_redes_sociales'),
-        index.SearchField('otros_detalles'),
-    ]
 
     content_panels = Page.content_panels + [
-        FieldPanel('nombre'),
-        FieldPanel('date'),
-        FieldPanel('lugar_de_nacimiento'),
-        FieldPanel('body'),
-        FieldPanel('enlace_redes_sociales'),
-        FieldPanel('otros_detalles'),
-        InlinePanel('gallery_images', label="Gallery images"),
+        FieldPanel('description'),
+        FieldPanel('cover'),
+        FieldPanel('release_date'),
+        StreamFieldPanel('platforms'),
+        FieldPanel('genero'),
+        FieldPanel('desarrollador'),
+        FieldPanel('editor'),
+        FieldPanel('jugadores'),
+        FieldPanel('modosdejuego'),
+        FieldPanel('requisitos'),
     ]
 
-    class BlogPageGalleryImage(Orderable) :
-        page = ParentalKey(Page ,on_delete=models.CASCADE, related_name='gallery_images')
-        image = models.ForeignKey(
-        'wagtailimages.Image', on_delete=models.CASCADE, related_name='+'
-    )
-    caption = models.CharField(blank=True, max_length=250)
-
-    panels = [
-        FieldPanel('image'),
-        FieldPanel('caption'),
-    ]

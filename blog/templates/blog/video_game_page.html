@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% load wagtailcore_tags %}
+
+{% block body_class %}template-blogpage{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="cover_image">
+                {% image page.cover width-300 %}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h1>{{ page.title }}</h1>
+            <div class="description"><strong>Sinopsis:</strong> {{ page.description | richtext }}</div>
+            <div class="fechadesalida"><strong>Fecha de salida:</strong> {{ page.release_date }}</div>
+            <div class="plataformas"><strong>Plataformas:</strong> {{ page.platforms }}</div>
+            <div class="genero"><strong>Género:</strong> {{ page.genero }}</div>
+            <div class="desarrollador"><strong>Desarrollador:</strong> {{ page.desarrollador }}</div>
+            <div class="editor"><strong>Editor:</strong> {{ page.editor }}</div>
+            <div class="jugadores"><strong>Jugadores:</strong> {{ page.jugadores }}</div>
+            <div class="modosdejuego"><strong>Modos de juego:</strong> {{ page.modosdejuego }}</div>
+            <div class="requisitos"><strong>Requisitos:</strong> {{ page.requisitos }}</div>
+            <p><a href="{{ page.get_parent.url }}">Return to blog</a></p>
+        </div>
+    </div>
+
+{% endblock %}

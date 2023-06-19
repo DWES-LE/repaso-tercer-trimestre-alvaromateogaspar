@@ -8,6 +8,7 @@ class AboutPage(Page):
     template = "acercade/about_page.html"
     body = CharField(max_length=8000, null=True, blank=True)
     
+    
     content_panels = Page.content_panels + [
         FieldPanel('body'),
     ]

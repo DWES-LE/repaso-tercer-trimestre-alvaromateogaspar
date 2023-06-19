@@ -36,3 +36,10 @@ class VideoGamePage(Page):
         FieldPanel('requisitos'),
     ]
 
+    class listadojuegos(Page):
+        def get_context(self, request):
+            context = super().get_context(request)
+            listadojuegos = self.get_children().live().order_by()
+            context['listadojuegos'] = listadojuegos
+            return context
+
